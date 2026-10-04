@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Neha! 🎉</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,400&family=Pacifico&display=swap" rel="stylesheet">
+    <!-- Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: radial-gradient(circle at center, #1a153b 0%, #09071a 100%);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+        }
+        
+        /* Floating Background Particles Animation */
+        .bg-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+        .particle {
+            position: absolute;
+            display: block;
+            list-style: none;
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 117, 140, 0.15);
+            animation: floatUp 10s linear infinite;
+            bottom: -150px;
+            border-radius: 50%;
+        }
+        .particle:nth-child(1) { left: 10%; width: 30px; height: 30px; animation-duration: 8s; background: rgba(255, 235, 59, 0.1); }
+        .particle:nth-child(2) { left: 25%; width: 15px; height: 15px; animation-duration: 12s; animation-delay: 2s; }
+        .particle:nth-child(3) { left: 40%; width: 25px; height: 25px; animation-duration: 7s; animation-delay: 1s; }
+        .particle:nth-child(4) { left: 60%; width: 35px; height: 35px; animation-duration: 15s; animation-delay: 3s; background: rgba(255, 117, 140, 0.2); }
+        .particle:nth-child(5) { left: 75%; width: 20px; height: 20px; animation-duration: 9s; animation-delay: 4s; }
+        .particle:nth-child(6) { left: 90%; width: 25px; height: 25px; animation-duration: 11s; animation-delay: 2s; }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { transform: translateY(-1000px) rotate(720deg); opacity: 0; }
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+            z-index: 2;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 28px;
+            padding: 40px 30px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.7), inset 0 1px 1px rgba(255,255,255,0.2);
+            animation: cardEntrance 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            transform-origin: center;
+        }
+        
+        @keyframes cardEntrance {
+            0% { opacity: 0; transform: scale(0.8) translateY(40px); filter: blur(10px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.3rem;
+            color: #ff758c;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 20px rgba(255,117,140,0.5);
+        }
+        p {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: #e2e2e2;
+            margin-bottom: 20px;
+        }
+        .highlight-text {
+            font-style: italic;
+            color: #ffeb3b;
+            font-weight: 500;
+            text-shadow: 0 0 10px rgba(255,235,59,0.3);
+        }
+        .btn {
+            background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
+            color: white;
+            border: none;
+            padding: 15px 38px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 25px rgba(255,117,140,0.4);
+            margin-top: 15px;
+            letter-spacing: 0.5px;
+        }
+        .btn:hover {
+            transform: translateY(-4px) scale(1.04);
+            box-shadow: 0 15px 30px rgba(255,117,140,0.7);
+        }
+        .hidden {
+            display: none !important;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .visible {
+            display: block !important;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .birthday-stickers {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            animation: bounceStickers 2s infinite ease-in-out;
+        }
+        @keyframes bounceStickers {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        /* Single Photo Styling */
+        .photo-gallery-container {
+            margin: 20px 0;
+        }
+        .photo-card-item {
+            background: rgba(0, 0, 0, 0.35);
+            border-radius: 20px;
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .photo-frame {
+            width: 100%;
+            height: 340px;
+            border-radius: 14px;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px dashed rgba(255, 117, 140, 0.4);
+            position: relative;
+        }
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .photo-caption {
+            margin-top: 12px;
+            font-size: 0.95rem;
+            color: #ffeb3b;
+            font-style: italic;
+        }
+
+        /* Dynamic Weather Widget Styles */
+        .weather-widget {
+            background: rgba(0, 0, 0, 0.45);
+            border-radius: 20px;
+            padding: 22px;
+            margin: 20px 0;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            text-align: left;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);
+        }
+        .weather-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 10px;
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+            color: #ff7eb3;
+        }
+        .weather-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 8px 0;
+            font-size: 0.95rem;
+        }
+        .weather-label {
+            color: #bbb;
+        }
+        .weather-val {
+            font-weight: 600;
+            color: #ffeb3b;
+        }
+
+        /* Realistic Birthday Cake Styling */
+        .realistic-cake-wrapper {
+            position: relative;
+            width: 240px;
+            height: 220px;
+            margin: 25px auto;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .realistic-cake-wrapper:hover {
+            transform: scale(1.04);
+        }
+        .cake-plate {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 260px;
+            height: 20px;
+            background: #e0e0e0;
+            border-radius: 50%;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        }
+        .cake-body-bottom {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 220px;
+            height: 70px;
+            background: linear-gradient(to right, #d44d71, #ff758c, #d44d71);
+            border-radius: 0 0 20px 20px;
+            box-shadow: inset 0 -10px 15px rgba(0,0,0,0.3);
+        }
+        .cake-body-top {
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 170px;
+            height: 70px;
+            background: linear-gradient(to right, #ff8fa3, #ffb3c1, #ff8fa3);
+            border-radius: 20px 20px 10px 10px;
+            box-shadow: inset 0 -10px 15px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        /* Cake Inscribed Name Styling */
+        .cake-name-text {
+            font-family: 'Pacifico', cursive;
+            font-size: 1.15rem;
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+            transform: rotate(-3deg);
+            z-index: 3;
+            letter-spacing: 1px;
+            background: rgba(0, 0, 0, 0.15);
+            padding: 4px 12px;
+            border-radius: 10px;
+            border: 1px dashed rgba(255,255,255,0.4);
+        }
+        .frosting-drip {
+            position: absolute;
+            top: 75px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 176px;
+            height: 15px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 3px 5px rgba(0,0,0,0.1);
+        }
+        .cake-candle {
+            position: absolute;
+            bottom: 148px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 14px;
+            height: 45px;
+            background: repeating-linear-gradient(45deg, #ffeb3b, #ffeb3b 8px, #ff5252 8px, #ff5252 16px);
+            border-radius: 4px;
+            z-index: 4;
+        }
+        .cake-flame {
+            position: absolute;
+            top: -22px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 16px;
+            height: 24px;
+            background: radial-gradient(circle, #ffeb3b 0%, #ff9800 60%, #ff5722 100%);
+            border-radius: 50% 50% 20% 20%;
+            animation: flicker 0.5s infinite alternate;
+            box-shadow: 0 0 15px #ffeb3b;
+        }
+        @keyframes flicker {
+            0% { transform: translateX(-50%) scale(1) rotate(-3deg); }
+            100% { transform: translateX(-50%) scale(1.15) rotate(3deg); filter: brightness(1.2); }
+        }
+        .extinguished-flame {
+            display: none !important;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .heart {
+            color: #ff758c;
+            animation: pulse 1.5s infinite ease-in-out;
+            display: inline-block;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.35); filter: drop-shadow(0 0 10px rgba(255,117,140,0.8)); }
+            100% { transform: scale(1.0); }
+        }
+        .scanner-glow {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px auto;
+            border: 4px solid rgba(255, 117, 140, 0.2);
+            border-top: 4px solid #ff758c;
+            border-radius: 50%;
+            animation: spin 1.2s linear infinite, glowPulse 2s infinite ease-in-out;
+            cursor: pointer;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @keyframes glowPulse {
+            0%, 100% { box-shadow: 0 0 10px rgba(255,117,140,0.2); }
+            50% { box-shadow: 0 0 25px rgba(255,117,140,0.6); }
+        }
+        .scanner-pad {
+            display: inline-block;
+            padding: 10px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 50%;
+            border: 1px dashed rgba(255,117,140,0.4);
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Dynamic Animated Background Particles -->
+    <ul class="bg-particles">
+        <li class="particle"></li>
+        <li class="particle"></li>
+        <li class="particle"></li>
+        <li class="particle"></li>
+        <li class="particle"></li>
+        <li class="particle"></li>
+    </ul>
+
+    <!-- Background Audio -->
+    <audio id="bday-audio" loop>
+        <source src="https://www.bensound.com/bensound-music/bensound-cute.mp3" type="audio/mp3">
+    </audio>
+
+    <div class="container">
+        <!-- Section 0: Biometric Scanner Intro -->
+        <div class="card" id="intro-card">
+            <div class="scanner-pad" onclick="unlockSecret()" title="Click to scan fingerprint">
+                <div class="scanner-glow"></div>
+            </div>
+            <h1 style="font-size: 1.9rem;">Biometric Scanner 🔐</h1>
+            <p>System detected high-level cuteness and VIP drama trying to enter. Tap the scanner to verify identity.</p>
+            <p class="highlight-text">Target: The one and only Kaleshi Aurat.</p>
+            <button class="btn" onclick="unlockSecret()">Scan & Unlock ✨</button>
+        </div>
+
+        <!-- Section 1: Main Birthday Wish Reveal -->
+        <div class="card hidden" id="birthday-card">
+            <div class="birthday-stickers">🎉 🎂 🎈 🎁 ✨</div>
+            <h1>Happy Birthday, Neha! <span class="heart">❤</span></h1>
+            <p style="color: #ffeb3b; font-weight: 600; margin-top: -5px; margin-bottom: 15px;">( Official VIP Kaleshi Person )</p>
+            <p>On your special day, I just have to say—even though you specialize in giving me mini heart-attacks and starting random arguments, my world would honestly be so boring without your chaotic energy. 😄</p>
+            <p>You have this magical way of driving me crazy and making me smile at the exact same second. Dealing with your endless demands and cute tantrums is somehow my favorite full-time job.</p>
+            <p class="highlight-text">"People look for peace in life, but honestly? Matching your vibe and surviving your daily dramas is the real adventure. Never change!"</p>
+            <p style="font-size: 0.95rem; color: #a8ff78; margin-top: 10px;">— Secretly yours, Fahu (Fahim)</p>
+            <button class="btn" onclick="showPhotosSection()">View Special Photo <span class="heart">📸</span></button>
+        </div>
+
+        <!-- Section 2: Single Photo Section -->
+        <div class="card hidden" id="photos-card">
+            <div class="birthday-stickers">📸💖👑</div>
+            <h1>Special Moment <span class="heart">✨</span></h1>
+            <p>The masterpiece of my favorite troublemaker!</p>
+            
+            <div class="photo-gallery-container">
+                <div class="photo-card-item">
+                    <div class="photo-frame">
+                        <img src="https://i.ibb.co.com/chwSzh9F/photo1-jpg.jpg" alt="Special Photo">
+                    </div>
+                    <p class="photo-caption">"When you are looking extra cute (and plotting next drama) 😌"</p>
+                </div>
+            </div>
+
+            <button class="btn" onclick="showWeatherSection()">Check Mood Weather 🌤️</button>
+        </div>
+
+        <!-- Section 3: Dynamic Weather & Mood Report Widget -->
+        <div class="card hidden" id="weather-card">
+            <div class="birthday-stickers">🌦️📊✨</div>
+            <h1>Live Mood Weather 🌡️</h1>
+            <p>Real-time atmospheric report from Neha's brain!</p>
+            
+            <div class="weather-widget">
+                <div class="weather-header">
+                    <span>📍 Chittagong / Neha's World</span>
+                    <span id="live-time">Today, Birthday Special</span>
+                </div>
+                <div class="weather-row">
+                    <span class="weather-label">Temperature:</span>
+                    <span class="weather-val">100°C (High Anger Risk 🔥)</span>
+                </div>
+                <div class="weather-row">
+                    <span class="weather-label">Cuteness Index:</span>
+                    <span class="weather-val">Overload (999% 🌸)</span>
+                </div>
+                <div class="weather-row">
+                    <span class="weather-label">Drama Forecast:</span>
+                    <span class="weather-val">Heavy storm of arguments expected ⚡</span>
+                </div>
+                <div class="weather-row" style="margin-top: 12px; border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 10px;">
+                    <span class="weather-label">Recommended Action:</span>
+                    <span class="weather-val" style="color: #a8ff78;">Send chocolates immediately! 🍫</span>
+                </div>
+            </div>
+
+            <button class="btn" onclick="showCakeSection()">Cut the Birthday Cake 🎂</button>
+        </div>
+
+        <!-- Section 4: Realistic Custom Cake Section -->
+        <div class="card hidden" id="cake-card">
+            <div class="birthday-stickers">🎂 🕯️ 🎈</div>
+            <h1>Time to Cut the Cake! <span class="heart">🥳</span></h1>
+            <p id="cake-instruction">Tap on the candle to blow it out and make a wish!</p>
+            
+            <div class="realistic-cake-wrapper" onclick="blowCandle()">
+                <div class="cake-plate"></div>
+                <div class="cake-body-bottom"></div>
+                <div class="cake-body-top">
+                    <!-- Cake Inscribed Name -->
+                    <div class="cake-name-text">Happy Birthday Neha</div>
+                </div>
+                <div class="frosting-drip"></div>
+                <div class="cake-candle">
+                    <div id="cake-flame" class="cake-flame"></div>
+                </div>
+            </div>
+            
+            <p id="cake-message" class="highlight-text" style="display: none; margin-top: 15px;">Yay! Candle blown out & Cake sliced! Let's make this year amazing! 💖</p>
+            
+            <button class="btn hidden" id="next-final-btn" onclick="showFinalSection()" style="margin-top: 15px;">Final Surprise ➔</button>
+        </div>
+
+        <!-- Section 5: Final Note -->
+        <div class="card hidden" id="final-card">
+            <div class="birthday-stickers">🌟🥳💖🥂</div>
+            <h1>Mission Accomplished! <span class="heart">🌟</span></h1>
+            <p>You survived the surprise! But jokes apart, having you around is the best thing ever. You make every ordinary day feel cinematic.</p>
+            <p class="highlight-text">Happy Birthday once again to my favorite distraction. Stay stunning, stay dramatic, and keep being mine! 💖</p>
+            <p style="font-size: 0.95rem; color: #ff758c; margin-top: 15px;">Forever yours, <br><strong>Fahu (Fahim)</strong></p>
+            <button class="btn" onclick="restart()" style="margin-top: 15px;">Replay Magic 💫</button>
+        </div>
+    </div>
+
+    <script>
+        function triggerConfetti() {
+            confetti({
+                particleCount: 150,
+                spread: 100,
+                origin: { y: 0.6 }
+            });
+        }
+
+        function playMusic() {
+            let audio = document.getElementById('bday-audio');
+            audio.volume = 0.5;
+            audio.play().catch(e => console.log("Audio autoplay restricted by browser"));
+        }
+
+        function unlockSecret() {
+            playMusic();
+            triggerConfetti();
+
+            let intro = document.getElementById('intro-card');
+            intro.style.transform = 'scale(0.90)';
+            intro.style.opacity = '0';
+            setTimeout(() => {
+                intro.classList.add('hidden');
+                let birthdayCard = document.getElementById('birthday-card');
+                birthdayCard.classList.remove('hidden');
+                birthdayCard.classList.add('visible');
+            }, 400);
+        }
+
+        function showPhotosSection() {
+            triggerConfetti();
+            let bCard = document.getElementById('birthday-card');
+            bCard.style.transform = 'scale(0.90)';
+            bCard.style.opacity = '0';
+            setTimeout(() => {
+                bCard.classList.remove('visible');
+                bCard.classList.add('hidden');
+                let pCard = document.getElementById('photos-card');
+                pCard.style.transform = 'scale(1)';
+                pCard.style.opacity = '1';
+                pCard.classList.remove('hidden');
+                pCard.classList.add('visible');
+            }, 400);
+        }
+
+        function showWeatherSection() {
+            let pCard = document.getElementById('photos-card');
+            pCard.style.transform = 'scale(0.90)';
+            pCard.style.opacity = '0';
+            setTimeout(() => {
+                pCard.classList.remove('visible');
+                pCard.classList.add('hidden');
+                let weatherCard = document.getElementById('weather-card');
+                weatherCard.style.transform = 'scale(1)';
+                weatherCard.style.opacity = '1';
+                weatherCard.classList.remove('hidden');
+                weatherCard.classList.add('visible');
+            }, 400);
+        }
+
+        function showCakeSection() {
+            let weatherCard = document.getElementById('weather-card');
+            weatherCard.style.transform = 'scale(0.90)';
+            weatherCard.style.opacity = '0';
+            setTimeout(() => {
+                weatherCard.classList.remove('visible');
+                weatherCard.classList.add('hidden');
+                let cakeCard = document.getElementById('cake-card');
+                cakeCard.style.transform = 'scale(1)';
+                cakeCard.style.opacity = '1';
+                cakeCard.classList.remove('hidden');
+                cakeCard.classList.add('visible');
+            }, 400);
+        }
+
+        function blowCandle() {
+            let flame = document.getElementById('cake-flame');
+            if (!flame.classList.contains('extinguished-flame')) {
+                flame.classList.add('extinguished-flame');
+                triggerConfetti();
+                document.getElementById('cake-instruction').innerText = "🎂✨ Happy Birthday to You! ✨🎂";
+                document.getElementById('cake-message').style.display = 'block';
+                document.getElementById('next-final-btn').classList.remove('hidden');
+            }
+        }
+
+        function showFinalSection() {
+            triggerConfetti();
+            let cakeCard = document.getElementById('cake-card');
+            cakeCard.style.transform = 'scale(0.90)';
+            cakeCard.style.opacity = '0';
+            setTimeout(() => {
+                cakeCard.classList.remove('visible');
+                cakeCard.classList.add('hidden');
+                let finalCard = document.getElementById('final-card');
+                finalCard.style.transform = 'scale(1)';
+                finalCard.style.opacity = '1';
+                finalCard.classList.remove('hidden');
+                finalCard.classList.add('visible');
+            }, 400);
+        }
+
+        function restart() {
+            let finalCard = document.getElementById('final-card');
+            finalCard.style.transform = 'scale(0.90)';
+            finalCard.style.opacity = '0';
+            setTimeout(() => {
+                finalCard.classList.remove('visible');
+                finalCard.classList.add('hidden');
+                // Reset candle state
+                let flame = document.getElementById('cake-flame');
+                flame.classList.remove('extinguished-flame');
+                document.getElementById('cake-instruction').innerText = "Tap on the candle to blow it out and make a wish!";
+                document.getElementById('cake-message').style.display = 'none';
+                document.getElementById('next-final-btn').classList.add('hidden');
+
+                let intro = document.getElementById('intro-card');
+                intro.style.opacity = '1';
+                intro.style.transform = 'scale(1)';
+                intro.classList.remove('hidden');
+                intro.classList.add('visible');
+            }, 400);
+        }
+    </script>
+</body>
+</html>
